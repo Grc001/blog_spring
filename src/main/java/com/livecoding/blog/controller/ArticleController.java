@@ -1,7 +1,10 @@
 package com.livecoding.blog.controller;
 
 import com.livecoding.blog.entity.Article;
+import com.livecoding.blog.entity.Category;
 import com.livecoding.blog.repository.ArticleRepository;
+import com.livecoding.blog.repository.CategoryRepository;
+import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +16,9 @@ public class ArticleController {
     @Autowired
     ArticleRepository articleRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     @GetMapping("articles")
     public List<Article> getAllArticles() {
         return articleRepository.findAll();
@@ -23,17 +29,26 @@ public class ArticleController {
         return articleRepository.findById(id).get();
     }
 
-    @PostMapping("articles")
-    public Article createArticle(@RequestBody Article article) {
+    @GetMapping("categories/{categoryId}/articles")
+    public List<Article> getArticlesByCategoryId(@PathVariable Long categoryId) {
+        return articleRepository.findByCategoryId(categoryId);
+    }
+
+    @PostMapping("categories/{categoryId}/articles")
+    public Article createArticle(@PathVariable Long categoryId, @RequestBody Article article) {
+        Category categoryToUse = categoryRepository.findById(categoryId).get();
+        article.setCategory(categoryToUse);
         return articleRepository.save(article);
     }
 
-    @PutMapping("articles/{id}")
-    public Article updateArticle(@PathVariable Long id, @RequestBody Article body) {
-        Article articleToUpdate = articleRepository.findById(id).get();
+    @PutMapping("categories/{categoryId}/articles/{articleId}")
+    public Article updateArticle(@PathVariable Long articleId, @PathVariable Long categoryId, @RequestBody Article body) {
+        Article articleToUpdate = articleRepository.findById(articleId).get();
+        Category categoryToUse = categoryRepository.findById(categoryId).get();
         articleToUpdate.setTitle(body.getTitle());
         articleToUpdate.setContent(body.getContent());
         articleToUpdate.setSlug(body.getSlug());
+        articleToUpdate.setCategory(categoryToUse);
 
         return articleRepository.save(articleToUpdate);
     }

@@ -4,6 +4,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ArticlePageComponent } from './pages/article-page/article-page.component';
 import { ArticlesListPageComponent } from './pages/articles-list-page/articles-list-page.component';
 
+
 const routes: Routes = [
   {
     path : "",

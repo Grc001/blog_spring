@@ -1,1 +1,7 @@
 <p>home-page works!</p>
+
+  <div *ngFor="let articles of listOfArticles">
+    <a [routerLink]= "['/articles/' , articles.id ]"  ><h2 >{{ articles.title }}</h2></a>
+    <p>{{ articles.createdAt}}</p>
+  </div>
+  

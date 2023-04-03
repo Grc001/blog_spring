@@ -1,1 +1,5 @@
-<p>articles-list-page works!</p>
+
+<div *ngFor="let articles of listOfArticles">
+  <h2>{{ articles.title }}</h2>
+  <p>{{ articles.content }}</p>
+</div>

@@ -1,0 +1,14 @@
+<p>admin-articles-list-page works!</p>
+<table>
+  <thead>
+      <tr>
+          <th colspan="2">les articles</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let element of listOfArticles">
+          <td>{{element.title}}</td>
+          <td>{{element.createdAt}}</td>
+      </tr>
+  </tbody>
+</table>
